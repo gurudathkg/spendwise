@@ -1,0 +1,107 @@
+### authentication endpoints
+
+#api call for creating user account
+###
+POST http://127.0.0.1:8000/v1/spendings/register/
+Content-Type: application/json
+
+{
+
+    "username":"react",
+    "email":"react@gmail.com",
+    "password":"password@123"
+}
+### create user 2
+POST http://127.0.0.1:8000/v1/spendings/register/
+Content-Type: application/json
+
+{
+  "username": "django",
+  "email": "django@gmail.com",
+  "password": "password@123"
+}
+
+#apicall for getting token
+###
+POST  http://127.0.0.1:8000/v1/spendings/token/
+Content-Type: application/json
+
+{
+    "username":"django",
+    "password":"password@123"
+}
+
+#api call for get current user details
+###
+GET http://127.0.0.1:8000/v1/spendings/me/
+Accept: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+
+#api call for listing all expenses
+###
+
+GET http://127.0.0.1:8000/v1/spendings/expenses/
+Accept: application/json
+#Authorization: Basic django:password@123
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+#api call for adding expense
+###
+POST http://127.0.0.1:8000/v1/spendings/expenses/
+Content-Type: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+{
+
+    "title":"Turf booking",
+    "amount":1200,
+    "category":"ENTERtAINMENT",
+    "payment_method":"upi"
+}
+
+#api call for fetching expense details
+
+###
+get http://127.0.0.1:8000/v1/spendings/expenses/3/
+Accept: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+#api call for updating expense
+
+###
+PUT http://127.0.0.1:8000/v1/spendings/expenses/3/
+Content-Type: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+{
+  "id": 4,
+  "title": "TRAVEL",
+  "amount": "5004.00",
+  "category": "TRAVEL",
+  "priority": "need",
+  "payment_method": "upi",
+  "created_at": "2026-10-09T06:12:16.923711Z",
+  "updated_at": "2026-10-09T06:12:16.923730Z",
+  "owner": 1
+}
+
+#api call for deleting expense
+
+###
+DELETE http://127.0.0.1:8000/v1/spendings/expenses/4/
+Accept: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+
+#api call for getting summary of transactions
+###
+GET http://127.0.0.1:8000/v1/spendings/expenses/summary/
+Accept: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41
+
+#api call for budget plan
+###
+GET http://127.0.0.1:8000/v1/spendings/expenses/budget/
+Accept: application/json
+Authorization: Token f89b7ab51170d73da945957603f463205a86ba41

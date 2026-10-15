@@ -1,0 +1,44 @@
+import os
+
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv()
+
+api_key = os.getenv("api_key")
+client = genai.Client(api_key=api_key) if api_key else None
+
+
+def get_budget_plan(response_data):
+
+
+    monthly_total = response_data.get("monthly_total")
+    category_summary = response_data.get("category_summary")
+
+    category_summary_text = ""
+
+    for di in category_summary:
+        category_summary_text += f"* {di.get("category")}: ₹{di.get("total")}\n"
+
+    print(category_summary_text)
+
+    prompt = f"""
+        Act as an expert financial advisor specializing in family budgeting and personal finance.
+
+        Here is my monthly financial summary for last month:
+        - Total Monthly Expense: ₹{monthly_total:,}
+        - Category Breakdown: {category_summary_text}
+
+        Based on this data, please provide a practical 1-month Kerala budget plan:
+        1. Expense Analysis: Point out high-spending areas relative to typical Kerala living costs.
+        2. Optimized 1-Month Allocation Plan: Suggest a revised budget breakdown using standard allocations.
+        3. Actionable Kerala-Specific Savings Tips: Provide 3-4 realistic ways to reduce costs locally.
+    """
+
+    # Step 4: Call Gemini 2.5 Flash
+    response = client.models.generate_content(
+        model="gemini-3.7-flash",
+        contents=prompt
+    )
+
+    return response.text
